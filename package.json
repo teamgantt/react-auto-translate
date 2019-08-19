@@ -1,0 +1,36 @@
+{
+  "name": "react-auto-translate",
+  "version": "0.0.1",
+  "description": "Simple React components to automatically translate strings with Google Translate API",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "webpack",
+    "start": "webpack --watch",
+    "prepublish": "rm -rf ./dist && npm run build"
+  },
+  "keywords": [
+    "react",
+    "react",
+    "native",
+    "i18tn",
+    "translate"
+  ],
+  "author": "Brad Bumbalough <bradley.bumbalough@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.5",
+    "react": "^16.8.6",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.6"
+  },
+  "peerDependencies": {
+    "react": "^16.8.6"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/teamgantt/react-auto-translate.git"
+  }
+}
