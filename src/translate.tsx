@@ -1,20 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect, useContext, Fragment} from 'react';
+import {TranslateContext, LanguageContext} from './translator';
 
-type Props = {
-  handleTranslate: (
-    value: string,
-    setTranslation: (translation: string) => void
-  ) => void,
-  language: string,
-  value: string
-};
-
-export default function Translate({ handleTranslate, language, value }: Props) {
+export default function Translate({
+  children: value,
+}: {
+  children: string;
+}): JSX.Element {
+  const language = useContext(LanguageContext);
+  const handleTranslate = useContext(TranslateContext);
   const [translation, setTranslation] = useState(value);
 
   useEffect(() => {
     handleTranslate(value, setTranslation);
   }, [value, language]);
 
-  return translation;
+  return <Fragment>{translation}</Fragment>;
 }

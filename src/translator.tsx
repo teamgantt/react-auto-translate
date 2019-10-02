@@ -1,22 +1,25 @@
-import React, { createContext } from "react";
+import React, {createContext} from 'react';
 
-export const TranslateContext = createContext(null);
-export const LanguageContext = createContext("en");
-export const CacheProviderContext = createContext({});
-
-//https://ctrlq.org/code/19899-google-translate-languages
+export const TranslateContext: React.Context<
+  TranslationHandler
+> = createContext(null);
+export const LanguageContext: React.Context<string> = createContext('en');
 
 type CacheProvider = {
-  get: (language: string, key: string) => string,
-  set: (language: string, key: string, translation: string) => void
+  get: (language: string, key: string) => string;
+  set: (language: string, key: string, translation: string) => void;
 };
 
 type Props = {
-  to: string,
-  from: string,
-  cacheProvider?: CacheProvider,
-  children: string,
-  googleApiKey: string
+  to: string;
+  from: string;
+  cacheProvider?: CacheProvider;
+  children: string;
+  googleApiKey: string;
+};
+
+export type TranslationHandler = {
+  (value: string, setTranslation: (translation: string) => void): Promise<void>;
 };
 
 export default function Translator({
@@ -24,11 +27,11 @@ export default function Translator({
   from,
   cacheProvider,
   children,
-  googleApiKey
-}: Props) {
-  const handleTranslationAsync = async (
-    value: string,
-    setTranslation: (translation: string) => void
+  googleApiKey,
+}: Props): JSX.Element {
+  const handleTranslationAsync: TranslationHandler = async (
+    value,
+    setTranslation
   ) => {
     let translatedText = value;
 
@@ -49,7 +52,9 @@ export default function Translator({
 
         try {
           cacheProvider.set(to, value, translatedText);
-        } catch (e) {}
+        } catch (e) {
+          // noop
+        }
       }
     }
 
