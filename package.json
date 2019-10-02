@@ -2,13 +2,6 @@
   "name": "react-auto-translate",
   "version": "0.0.3",
   "description": "Simple React components to automatically translate strings with Google Translate API",
-  "types": "dist/typescript/index.d.ts",
-  "main": "dist/commonjs/index.js",
-  "module": "dist/module/index.js",
-  "react-native": "dist/module/index.js",
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "build": "bob build",
     "prepublish": "npm run build",
@@ -45,14 +38,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/teamgantt/react-auto-translate.git"
-  },
-  "@react-native-community/bob": {
-    "source": "src",
-    "output": "dist",
-    "targets": [
-      "commonjs",
-      "module",
-      "typescript"
-    ]
   }
 }
