@@ -5,6 +5,7 @@
   "types": "dist/typescript/index.d.ts",
   "main": "dist/commonjs/index.js",
   "module": "dist/module/index.js",
+  "react-native": "dist/module/index.js",
   "files": [
     "dist"
   ],
