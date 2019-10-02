@@ -11,7 +11,7 @@
   "scripts": {
     "build": "bob build",
     "prepublish": "npm run build",
-    "lint": "tsc --noEmit && eslint \"src/**/*.{js,ts,tsx}\" --fix"
+    "lint": "tsc --noEmit && npx eslint \"src/**/*.{js,ts,tsx}\" --fix"
   },
   "keywords": [
     "react",
@@ -28,6 +28,7 @@
     "@types/react-dom": "^16.9.1",
     "@typescript-eslint/eslint-plugin": "^2.3.2",
     "@typescript-eslint/parser": "^2.3.2",
+    "babel-eslint": "^10.0.3",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^6.3.0",
     "eslint-config-teamgantt": "^2.0.1",
