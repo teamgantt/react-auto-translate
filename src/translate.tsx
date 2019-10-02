@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext, Fragment} from 'react';
+import * as React from 'react';
 import {TranslateContext, LanguageContext} from './translator';
 
 export default function Translate({
@@ -6,13 +6,13 @@ export default function Translate({
 }: {
   children: string;
 }): JSX.Element {
-  const language = useContext(LanguageContext);
-  const handleTranslate = useContext(TranslateContext);
-  const [translation, setTranslation] = useState(value);
+  const language = React.useContext(LanguageContext);
+  const handleTranslate = React.useContext(TranslateContext);
+  const [translation, setTranslation] = React.useState(value);
 
-  useEffect(() => {
+  React.useEffect(() => {
     handleTranslate(value, setTranslation);
   }, [value, language]);
 
-  return <Fragment>{translation}</Fragment>;
+  return <React.Fragment>{translation}</React.Fragment>;
 }

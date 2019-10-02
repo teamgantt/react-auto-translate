@@ -1,25 +1,25 @@
-import React, { useState } from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import { Translator, Translate } from "react-auto-translate";
+import React, {useState} from 'react';
+import logo from './logo.svg';
+import './App.css';
+import {Translator, Translate} from 'react-auto-translate';
 
 // This is just an example of how you could wire this to localStorage
 const cacheProvider = {
   get: (language, key) =>
-    ((JSON.parse(localStorage.getItem("translations")) || {})[key] || {})[
+    ((JSON.parse(localStorage.getItem('translations')) || {})[key] || {})[
       language
     ],
   set: (language, key, value) => {
-    const existing = JSON.parse(localStorage.getItem("translations")) || {
-      [key]: {}
+    const existing = JSON.parse(localStorage.getItem('translations')) || {
+      [key]: {},
     };
-    existing[key] = { ...existing[key], [language]: value };
-    localStorage.setItem("tg-translations", JSON.stringify(existing));
-  }
+    existing[key] = {...existing[key], [language]: value};
+    localStorage.setItem('translations', JSON.stringify(existing));
+  },
 };
 
 function App() {
-  const [to, setTo] = useState("es");
+  const [to, setTo] = useState('es');
 
   return (
     <Translator
@@ -35,10 +35,7 @@ function App() {
             <h3>React Auto Translate</h3>
             <Translate>Select a Language</Translate>:
             <br />
-            <select
-              value={to}
-              onChange={({ target: { value } }) => setTo(value)}
-            >
+            <select value={to} onChange={({target: {value}}) => setTo(value)}>
               <option value="en">English</option>
               <option value="es">Spanish</option>
               <option value="fr">French</option>
