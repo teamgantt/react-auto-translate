@@ -1,14 +1,17 @@
 {
   "name": "react-auto-translate",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Simple React components to automatically translate strings with Google Translate API",
-  "main": "./dist/index.js",
+  "types": "dist/typescript/index.d.ts",
+  "main": "dist/commonjs/index.js",
+  "module": "dist/module/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "build": "webpack",
-    "start": "webpack --watch",
-    "prepublish": "rm -rf ./dist && npm run build",
-    "lint": "tsc --noEmit && eslint \"src/**/*.{js,ts,tsx}\" --fix",
-    "watch:lint": "onchange \"src/**/*.{js,ts,tsx}\" \"stories/**/*.{js,ts,tsx}\" -- eslint \"{{changed}}\""
+    "build": "bob build",
+    "prepublish": "npm run build",
+    "lint": "tsc --noEmit && eslint \"src/**/*.{js,ts,tsx}\" --fix"
   },
   "keywords": [
     "react",
@@ -20,24 +23,19 @@
   "author": "Brad Bumbalough <bradley.bumbalough@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.5.5",
-    "@babel/preset-env": "^7.5.5",
-    "@babel/preset-react": "^7.0.0",
+    "@react-native-community/bob": "^0.7.0",
     "@types/react": "^16.9.4",
     "@types/react-dom": "^16.9.1",
     "@typescript-eslint/eslint-plugin": "^2.3.2",
     "@typescript-eslint/parser": "^2.3.2",
-    "babel-loader": "^8.0.5",
-    "eslint": "^6.5.1",
+    "eslint": "^5.16.0",
     "eslint-config-prettier": "^6.3.0",
     "eslint-config-teamgantt": "^2.0.1",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "^7.15.0",
     "prettier": "^1.18.2",
     "react": "^16.8.6",
-    "typescript": "^3.6.3",
-    "webpack": "^4.29.6",
-    "webpack-cli": "^3.3.6"
+    "typescript": "^3.6.3"
   },
   "peerDependencies": {
     "react": "^16.8.6"
@@ -45,5 +43,14 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/teamgantt/react-auto-translate.git"
+  },
+  "@react-native-community/bob": {
+    "source": "src",
+    "output": "dist",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
   }
 }

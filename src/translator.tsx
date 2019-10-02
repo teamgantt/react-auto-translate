@@ -1,12 +1,18 @@
-import React, {createContext} from 'react';
+import * as React from 'react';
+
+export type TranslationHandler = {
+  (value: string, setTranslation: (translation: string) => void): Promise<void>;
+};
+
+const defaultHandler: TranslationHandler = () => new Promise(() => {});
 
 export const TranslateContext: React.Context<
   TranslationHandler
-> = createContext(null);
-export const LanguageContext: React.Context<string> = createContext('en');
+> = React.createContext(defaultHandler);
+export const LanguageContext: React.Context<string> = React.createContext('en');
 
 type CacheProvider = {
-  get: (language: string, key: string) => string;
+  get: (language: string, key: string) => string | undefined;
   set: (language: string, key: string, translation: string) => void;
 };
 
@@ -16,10 +22,6 @@ type Props = {
   cacheProvider?: CacheProvider;
   children: string;
   googleApiKey: string;
-};
-
-export type TranslationHandler = {
-  (value: string, setTranslation: (translation: string) => void): Promise<void>;
 };
 
 export default function Translator({
@@ -33,16 +35,21 @@ export default function Translator({
     value,
     setTranslation
   ) => {
+    let useCache = !!cacheProvider;
     let translatedText = value;
 
-    if (to !== from) {
-      try {
-        translatedText = cacheProvider.get(to, value);
-      } catch (e) {
-        translatedText = null;
-      }
+    if (to !== from && cacheProvider) {
+      const cachedTranslation = cacheProvider.get(to, value);
 
-      if (!translatedText) {
+      if (cachedTranslation) {
+        translatedText = cachedTranslation;
+      } else {
+        useCache = false;
+      }
+    }
+
+    if (!useCache) {
+      try {
         const response = await fetch(
           `https://translation.googleapis.com/language/translate/v2?source=${from}&target=${to}&key=${googleApiKey}&q=${value}&format=text`
         );
@@ -50,11 +57,11 @@ export default function Translator({
         const jsonResponse = await response.json();
         translatedText = jsonResponse.data.translations[0].translatedText;
 
-        try {
+        if (cacheProvider) {
           cacheProvider.set(to, value, translatedText);
-        } catch (e) {
-          // noop
         }
+      } catch {
+        // noop
       }
     }
 
