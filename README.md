@@ -1,5 +1,5 @@
 # React Auto Translate
-> Simple React components to automatically translate strings with Google Translate API
+> A simple React component to automatically translate strings with Google Translate API.
 
 ## Installation
 ```
@@ -18,6 +18,7 @@ import {Translator, Translate} from 'react-auto-translate';
 return (
   <Translator
       cacheProvider={cacheProvider}
+      from='en'
       to='es'
       googleApiKey='API_KEY'
     >
@@ -37,6 +38,7 @@ return (
 
 ### `CacheProvider`
  - Fully customizable handler to store the translated text. You can also use this to override and initialize the translations for your app.
+ - If not provided, it will ping Google for the translation every time the component is rendered.
  - Must be an object that conforms to the following type.
  ```ts
 type CacheProvider = {
