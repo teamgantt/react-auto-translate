@@ -1,0 +1,13 @@
+{
+  "include": ["src"],
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "strict": true,
+    "moduleResolution": "node",
+    "lib": ["es2015", "es2016", "esnext", "dom"],
+    "jsx": "react",
+    "esModuleInterop": true
+  },
+  "exclude": ["node_modules", "example"]
+}
