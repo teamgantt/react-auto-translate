@@ -1,6 +1,6 @@
 {
   "name": "react-auto-translate",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Simple React components to automatically translate strings with Google Translate API",
   "scripts": {
     "build": "bob build",
