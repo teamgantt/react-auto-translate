@@ -6,7 +6,9 @@
     "build": "bob build",
     "prepublish": "npm run build",
     "lint": "tsc --noEmit && npx eslint \"src/**/*.{js,ts,tsx}\" --fix",
-    "prepare": "bob build"
+    "prepare": "bob build",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "keywords": [
     "react",
@@ -19,6 +21,7 @@
   "license": "MIT",
   "devDependencies": {
     "@react-native-community/bob": "^0.7.0",
+    "@types/jest": "^26.0.5",
     "@types/react": "^16.9.4",
     "@types/react-dom": "^16.9.1",
     "@typescript-eslint/eslint-plugin": "^2.3.2",
@@ -29,9 +32,27 @@
     "eslint-config-teamgantt": "^2.0.1",
     "eslint-plugin-prettier": "^3.1.1",
     "eslint-plugin-react": "^7.15.0",
+    "jest": "^26.1.0",
     "prettier": "^1.18.2",
     "react": "^16.8.6",
+    "ts-jest": "^26.1.3",
     "typescript": "^3.6.3"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/example/",
+      "/lib/"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ]
   },
   "peerDependencies": {
     "react": "^16.8.6"
