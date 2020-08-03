@@ -1,8 +1,6 @@
-import React, {createContext} from 'react';
-
-export type TranslationHandler = {
-  (value: string, setTranslation: (translation: string) => void): void;
-};
+import React, {createContext, useCallback} from 'react';
+import TranslatorFactory from './helpers/translator-factory';
+import {TranslationHandler, CacheProvider} from './types';
 
 const defaultHandler: TranslationHandler = () => {};
 
@@ -10,11 +8,6 @@ export const TranslateContext: React.Context<
   TranslationHandler
 > = createContext(defaultHandler);
 export const LanguageContext: React.Context<string> = createContext('en');
-
-type CacheProvider = {
-  get: (language: string, key: string) => string | undefined;
-  set: (language: string, key: string, translation: string) => void;
-};
 
 type Props = {
   to: string;
@@ -31,66 +24,22 @@ export default function Translator({
   children,
   googleApiKey,
 }: Props): JSX.Element {
-  const getCachedTranslation = (value: string): string | undefined => {
-    if (!cacheProvider) {
-      return undefined;
-    }
+  const handleTranslationAsync: TranslationHandler = useCallback(
+    async (value, setTranslation) => {
+      const options = {
+        to,
+        from,
+        apiKey: googleApiKey,
+      };
+      const translator = TranslatorFactory.create(options, cacheProvider);
+      const translation = await translator.translate(value);
 
-    return cacheProvider.get(to, value);
-  };
-
-  const setCachedTranslation = (value: string, translation: string): void => {
-    if (!cacheProvider) {
-      return;
-    }
-
-    cacheProvider.set(to, value, translation);
-  };
-
-  const getGoogleTranslation = async (
-    value: string
-  ): Promise<string | undefined> => {
-    try {
-      const response = await fetch(
-        `https://translation.googleapis.com/language/translate/v2?source=${from}&target=${to}&key=${googleApiKey}&q=${value}&format=text`
-      );
-
-      const jsonResponse = await response.json();
-
-      return jsonResponse.data.translations[0].translatedText;
-    } catch (e) {
-      return undefined;
-    }
-  };
-
-  const handleTranslationAsync: TranslationHandler = async (
-    value,
-    setTranslation
-  ) => {
-    // no need to translate!
-    if (to === from) {
-      setTranslation(value);
-      return;
-    }
-
-    // attempt cached translation first
-    const cachedTranslation = getCachedTranslation(value);
-    if (cachedTranslation) {
-      setTranslation(cachedTranslation);
-      return;
-    }
-
-    // attempt google translation next
-    const translatedText = await getGoogleTranslation(value);
-    if (translatedText) {
-      setCachedTranslation(value, translatedText);
-      setTranslation(translatedText);
-      return;
-    }
-
-    // default to value
-    setTranslation(value);
-  };
+      if (translation) {
+        setTranslation(translation);
+      }
+    },
+    [to, from, googleApiKey, cacheProvider]
+  );
 
   return (
     <TranslateContext.Provider value={handleTranslationAsync}>
