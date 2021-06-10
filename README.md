@@ -46,7 +46,7 @@ type CacheProvider = {
   set: (language: string, key: string, translation: string) => void;
 };
 
-// example procider
+// example provider
 const cacheProvider = {
   get: (language, key) =>
     ((JSON.parse(localStorage.getItem('translations')) || {})[key] || {})[
