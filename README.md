@@ -1,3 +1,4 @@
+![](https://img.shields.io/npm/v/react-auto-translate)
 # React Auto Translate
 > A simple React component to automatically translate strings with Google Translate API.
 
