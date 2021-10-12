@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {Translator, Translate} from 'react-auto-translate';
+import {TranslatorProvider, Translate} from 'react-auto-translate';
 
 // This is just an example of how you could wire this to localStorage
 const cacheProvider = {
@@ -22,7 +22,7 @@ function App() {
   const [to, setTo] = useState('es');
 
   return (
-    <Translator
+    <TranslatorProvider
       cacheProvider={cacheProvider}
       to={to}
       from="en"
@@ -49,7 +49,7 @@ function App() {
           </p>
         </header>
       </div>
-    </Translator>
+    </TranslatorProvider>
   );
 }
 

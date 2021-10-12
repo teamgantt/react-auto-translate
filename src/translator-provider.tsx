@@ -17,7 +17,7 @@ type Props = {
   googleApiKey: string;
 };
 
-export default function Translator({
+export function TranslatorProvider({
   to,
   from,
   cacheProvider,

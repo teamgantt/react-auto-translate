@@ -14,19 +14,19 @@ React Auto Translate uses React Context API to pass the translation handler arou
 
 ```jsx
 // App.js
-import {Translator, Translate} from 'react-auto-translate';
+import {TranslatorProvider, Translate} from 'react-auto-translate';
 
 return (
-  <Translator
-      cacheProvider={cacheProvider}
-      from='en'
-      to='es'
-      googleApiKey='API_KEY'
-    >
+  <TranslatorProvider
+    cacheProvider={cacheProvider}
+    from='en'
+    to='es'
+    googleApiKey='API_KEY'
+  >
 
     <h1><Translate>Welcome!</Translate></h1>
   ...
-  </Translator>
+  </TranslatorProvider>
 );
 ```
 
@@ -68,5 +68,4 @@ const cacheProvider = {
 
 ## TODO
 - [ ] Tests
-- [ ] CI Tests/Linting
 - [ ] Contribution / development instructions
